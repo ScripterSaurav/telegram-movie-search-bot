@@ -1,7 +1,9 @@
 import logging
 import asyncio
+
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
+
 from info import USERBOT_STRING_SESSION, API_ID, API_HASH, ADMINS, id_pattern
 from utils import save_file
 
@@ -16,14 +18,13 @@ async def index_files(bot, message):
     if not USERBOT_STRING_SESSION:
         await message.reply('Set `USERBOT_STRING_SESSION` in info.py file or in environment variables.')
     elif len(message.command) == 1:
-        await message.reply('Please specify channel username or id in command.\n\n'
-                            'Example: `/index -10012345678`')
+        await message.reply('Please specify channel username or id in command.\n\nExample: `/index -10012345678`')
     elif lock.locked():
         await message.reply('Wait until previous process complete.')
     else:
         msg = await message.reply('Processing...⏳')
         raw_data = message.command[1:]
-        user_bot = Client(USERBOT_STRING_SESSION, API_ID, API_HASH)
+        user_bot = Client('User-bot', API_ID, API_HASH, session_string=USERBOT_STRING_SESSION)
         chats = [int(chat) if id_pattern.search(chat) else chat for chat in raw_data]
         total_files = 0
 
@@ -31,22 +32,14 @@ async def index_files(bot, message):
             try:
                 async with user_bot:
                     for chat in chats:
-                        
-                        async for user_message in user_bot.iter_history(chat):
+
+                        async for user_message in user_bot.get_chat_history(chat):
                             try:
-                                message = await bot.get_messages(
-                                    chat,
-                                    user_message.message_id,
-                                    replies=0,
-                                )
+                                message = await bot.get_messages(chat, user_message.id, replies=0)
                             except FloodWait as e:
-                                await asyncio.sleep(e.x)
-                                message = await bot.get_messages(
-                                    chat,
-                                    user_message.message_id,
-                                    replies=0,
-                                )
-                            
+                                await asyncio.sleep(e.value)
+                                message = await bot.get_messages(chat, user_message.id, replies=0)
+
                             for file_type in ("document", "video", "audio"):
                                 media = getattr(message, file_type, None)
                                 if media is not None:
