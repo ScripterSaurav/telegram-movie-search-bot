@@ -3,18 +3,18 @@ import logging.config
 
 # Get logging configurations
 logging.config.fileConfig('logging.conf')
-logging.getLogger().setLevel(logging.ERROR)
+logging.getLogger().setLevel(logging.WARNING)
 
 import asyncio
 from pyrogram import Client
-from info import SESSION, USER_SESSION, API_ID, API_HASH, BOT_TOKEN, CHANNELS
+from info import SESSION, USERBOT_STRING_SESSION, API_ID, API_HASH, BOT_TOKEN, CHANNELS
 from utils import save_file
 
 
 async def main():
     """Save old files in database with the help of user bot"""
 
-    user_bot = Client(USER_SESSION, API_ID, API_HASH)
+    user_bot = Client('User-bot', API_ID, API_HASH, session_string=USERBOT_STRING_SESSION, in_memory=True)
     bot = Client(SESSION, API_ID, API_HASH, bot_token=BOT_TOKEN)
 
     await user_bot.start()
@@ -22,12 +22,8 @@ async def main():
 
     try:
         for channel in CHANNELS:
-            async for user_message in user_bot.iter_history(channel):
-                message = await bot.get_messages(
-                    channel,
-                    user_message.message_id,
-                    replies=0,
-                )
+            async for user_message in user_bot.get_chat_history(channel):
+                message = await bot.get_messages(channel, user_message.id, replies=0)
                 for file_type in ("document", "video", "audio"):
                     media = getattr(message, file_type, None)
                     if media is not None:
