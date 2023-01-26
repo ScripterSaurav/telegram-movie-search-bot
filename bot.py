@@ -3,7 +3,7 @@ import logging.config
 
 # Get logging configurations
 logging.config.fileConfig('logging.conf')
-logging.getLogger().setLevel(logging.ERROR)
+logging.getLogger().setLevel(logging.WARNING)
 
 from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
@@ -15,7 +15,7 @@ class Bot(Client):
 
     def __init__(self):
         super().__init__(
-            session_name=SESSION,
+            name=SESSION,
             api_id=API_ID,
             api_hash=API_HASH,
             bot_token=BOT_TOKEN,
