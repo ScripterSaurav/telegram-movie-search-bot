@@ -1,4 +1,6 @@
-# [Media Search bot](https://github.com/Mahesh0253/Media-Search-bot)
+# Give Me A Star ⭐
+
+# [Media Search bot](https://github.com/ScripterSaurav/telegram-movie-search-bot)
 
 * Index channel or group files for inline search.
 * When you post file on telegram channel or group this bot will save that file in database, so you can search easily in inline mode.
