@@ -1,4 +1,5 @@
-# Give Me A Star ⭐
+ ## Give Me A Star ⭐ 
+>After 50+ stars on this Project I will Release a New Modified Version Of This Bot With IMDb Support.
 
 # [Media Search bot](https://github.com/ScripterSaurav/telegram-movie-search-bot)
 
