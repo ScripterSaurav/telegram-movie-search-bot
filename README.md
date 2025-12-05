@@ -1,14 +1,3 @@
-## 🔔 Follow Us Here For More
-
-### [YouTube Channel](https://youtube.com/@TechnoFoxYT)
-
-### [Telegram Group](https://t.me/webcoderhub)
-
-### [Blog Site](https://webcoderhub.blogspot.com)
-
- ## Give Me A Star ⭐ 
->After 50+ stars on this Project I will Release a New Modified Version Of This Bot With IMDb Support & more.
-
 # [Media Search bot](https://github.com/ScripterSaurav/telegram-movie-search-bot)
 
 * Index channel or group files for inline search.
